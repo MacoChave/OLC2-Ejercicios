@@ -1,0 +1,690 @@
+Created by PLY version 3.11 (http://www.dabeaz.com/ply)
+
+Grammar
+
+Rule 0     S' -> start
+Rule 1     start -> exp_l
+Rule 2     exp_l -> exp_l AND exp_r
+Rule 3     exp_l -> exp_l OR exp_r
+Rule 4     exp_l -> NOT exp_r
+Rule 5     exp_l -> exp_r
+Rule 6     exp_r -> exp_e MENOR exp_e
+Rule 7     exp_r -> exp_e MENORIGUAL exp_e
+Rule 8     exp_r -> exp_e MAYOR exp_e
+Rule 9     exp_r -> exp_e MAYORIGUAL exp_e
+Rule 10    exp_r -> exp_e IGUAL exp_e
+Rule 11    exp_r -> exp_e NOIGUAL exp_e
+Rule 12    exp_r -> exp_e
+Rule 13    exp_e -> exp_e MAS exp_t
+Rule 14    exp_e -> exp_e MENOS exp_t
+Rule 15    exp_e -> exp_t
+Rule 16    exp_t -> exp_t POR exp_f
+Rule 17    exp_t -> exp_t DIV exp_f
+Rule 18    exp_t -> exp_f
+Rule 19    exp_f -> PARI exp_e PARD
+Rule 20    exp_f -> ID
+
+Terminals, with rules where they appear
+
+AND                  : 2
+DIV                  : 17
+ID                   : 20
+IGUAL                : 10
+MAS                  : 13
+MAYOR                : 8
+MAYORIGUAL           : 9
+MENOR                : 6
+MENORIGUAL           : 7
+MENOS                : 14
+NOIGUAL              : 11
+NOT                  : 4
+OR                   : 3
+PARD                 : 19
+PARI                 : 19
+POR                  : 16
+error                : 
+
+Nonterminals, with rules where they appear
+
+exp_e                : 6 6 7 7 8 8 9 9 10 10 11 11 12 13 14 19
+exp_f                : 16 17 18
+exp_l                : 1 2 3
+exp_r                : 2 3 4 5
+exp_t                : 13 14 15 16 17
+start                : 0
+
+Parsing method: LALR
+
+state 0
+
+    (0) S' -> . start
+    (1) start -> . exp_l
+    (2) exp_l -> . exp_l AND exp_r
+    (3) exp_l -> . exp_l OR exp_r
+    (4) exp_l -> . NOT exp_r
+    (5) exp_l -> . exp_r
+    (6) exp_r -> . exp_e MENOR exp_e
+    (7) exp_r -> . exp_e MENORIGUAL exp_e
+    (8) exp_r -> . exp_e MAYOR exp_e
+    (9) exp_r -> . exp_e MAYORIGUAL exp_e
+    (10) exp_r -> . exp_e IGUAL exp_e
+    (11) exp_r -> . exp_e NOIGUAL exp_e
+    (12) exp_r -> . exp_e
+    (13) exp_e -> . exp_e MAS exp_t
+    (14) exp_e -> . exp_e MENOS exp_t
+    (15) exp_e -> . exp_t
+    (16) exp_t -> . exp_t POR exp_f
+    (17) exp_t -> . exp_t DIV exp_f
+    (18) exp_t -> . exp_f
+    (19) exp_f -> . PARI exp_e PARD
+    (20) exp_f -> . ID
+
+    NOT             shift and go to state 4
+    PARI            shift and go to state 8
+    ID              shift and go to state 9
+
+    start                          shift and go to state 1
+    exp_l                          shift and go to state 2
+    exp_r                          shift and go to state 3
+    exp_e                          shift and go to state 5
+    exp_t                          shift and go to state 6
+    exp_f                          shift and go to state 7
+
+state 1
+
+    (0) S' -> start .
+
+
+
+state 2
+
+    (1) start -> exp_l .
+    (2) exp_l -> exp_l . AND exp_r
+    (3) exp_l -> exp_l . OR exp_r
+
+    $end            reduce using rule 1 (start -> exp_l .)
+    AND             shift and go to state 10
+    OR              shift and go to state 11
+
+
+state 3
+
+    (5) exp_l -> exp_r .
+
+    AND             reduce using rule 5 (exp_l -> exp_r .)
+    OR              reduce using rule 5 (exp_l -> exp_r .)
+    $end            reduce using rule 5 (exp_l -> exp_r .)
+
+
+state 4
+
+    (4) exp_l -> NOT . exp_r
+    (6) exp_r -> . exp_e MENOR exp_e
+    (7) exp_r -> . exp_e MENORIGUAL exp_e
+    (8) exp_r -> . exp_e MAYOR exp_e
+    (9) exp_r -> . exp_e MAYORIGUAL exp_e
+    (10) exp_r -> . exp_e IGUAL exp_e
+    (11) exp_r -> . exp_e NOIGUAL exp_e
+    (12) exp_r -> . exp_e
+    (13) exp_e -> . exp_e MAS exp_t
+    (14) exp_e -> . exp_e MENOS exp_t
+    (15) exp_e -> . exp_t
+    (16) exp_t -> . exp_t POR exp_f
+    (17) exp_t -> . exp_t DIV exp_f
+    (18) exp_t -> . exp_f
+    (19) exp_f -> . PARI exp_e PARD
+    (20) exp_f -> . ID
+
+    PARI            shift and go to state 8
+    ID              shift and go to state 9
+
+    exp_r                          shift and go to state 12
+    exp_e                          shift and go to state 5
+    exp_t                          shift and go to state 6
+    exp_f                          shift and go to state 7
+
+state 5
+
+    (6) exp_r -> exp_e . MENOR exp_e
+    (7) exp_r -> exp_e . MENORIGUAL exp_e
+    (8) exp_r -> exp_e . MAYOR exp_e
+    (9) exp_r -> exp_e . MAYORIGUAL exp_e
+    (10) exp_r -> exp_e . IGUAL exp_e
+    (11) exp_r -> exp_e . NOIGUAL exp_e
+    (12) exp_r -> exp_e .
+    (13) exp_e -> exp_e . MAS exp_t
+    (14) exp_e -> exp_e . MENOS exp_t
+
+    MENOR           shift and go to state 13
+    MENORIGUAL      shift and go to state 14
+    MAYOR           shift and go to state 15
+    MAYORIGUAL      shift and go to state 16
+    IGUAL           shift and go to state 17
+    NOIGUAL         shift and go to state 18
+    AND             reduce using rule 12 (exp_r -> exp_e .)
+    OR              reduce using rule 12 (exp_r -> exp_e .)
+    $end            reduce using rule 12 (exp_r -> exp_e .)
+    MAS             shift and go to state 19
+    MENOS           shift and go to state 20
+
+
+state 6
+
+    (15) exp_e -> exp_t .
+    (16) exp_t -> exp_t . POR exp_f
+    (17) exp_t -> exp_t . DIV exp_f
+
+    MENOR           reduce using rule 15 (exp_e -> exp_t .)
+    MENORIGUAL      reduce using rule 15 (exp_e -> exp_t .)
+    MAYOR           reduce using rule 15 (exp_e -> exp_t .)
+    MAYORIGUAL      reduce using rule 15 (exp_e -> exp_t .)
+    IGUAL           reduce using rule 15 (exp_e -> exp_t .)
+    NOIGUAL         reduce using rule 15 (exp_e -> exp_t .)
+    MAS             reduce using rule 15 (exp_e -> exp_t .)
+    MENOS           reduce using rule 15 (exp_e -> exp_t .)
+    AND             reduce using rule 15 (exp_e -> exp_t .)
+    OR              reduce using rule 15 (exp_e -> exp_t .)
+    $end            reduce using rule 15 (exp_e -> exp_t .)
+    PARD            reduce using rule 15 (exp_e -> exp_t .)
+    POR             shift and go to state 21
+    DIV             shift and go to state 22
+
+
+state 7
+
+    (18) exp_t -> exp_f .
+
+    POR             reduce using rule 18 (exp_t -> exp_f .)
+    DIV             reduce using rule 18 (exp_t -> exp_f .)
+    MENOR           reduce using rule 18 (exp_t -> exp_f .)
+    MENORIGUAL      reduce using rule 18 (exp_t -> exp_f .)
+    MAYOR           reduce using rule 18 (exp_t -> exp_f .)
+    MAYORIGUAL      reduce using rule 18 (exp_t -> exp_f .)
+    IGUAL           reduce using rule 18 (exp_t -> exp_f .)
+    NOIGUAL         reduce using rule 18 (exp_t -> exp_f .)
+    MAS             reduce using rule 18 (exp_t -> exp_f .)
+    MENOS           reduce using rule 18 (exp_t -> exp_f .)
+    AND             reduce using rule 18 (exp_t -> exp_f .)
+    OR              reduce using rule 18 (exp_t -> exp_f .)
+    $end            reduce using rule 18 (exp_t -> exp_f .)
+    PARD            reduce using rule 18 (exp_t -> exp_f .)
+
+
+state 8
+
+    (19) exp_f -> PARI . exp_e PARD
+    (13) exp_e -> . exp_e MAS exp_t
+    (14) exp_e -> . exp_e MENOS exp_t
+    (15) exp_e -> . exp_t
+    (16) exp_t -> . exp_t POR exp_f
+    (17) exp_t -> . exp_t DIV exp_f
+    (18) exp_t -> . exp_f
+    (19) exp_f -> . PARI exp_e PARD
+    (20) exp_f -> . ID
+
+    PARI            shift and go to state 8
+    ID              shift and go to state 9
+
+    exp_e                          shift and go to state 23
+    exp_t                          shift and go to state 6
+    exp_f                          shift and go to state 7
+
+state 9
+
+    (20) exp_f -> ID .
+
+    POR             reduce using rule 20 (exp_f -> ID .)
+    DIV             reduce using rule 20 (exp_f -> ID .)
+    MENOR           reduce using rule 20 (exp_f -> ID .)
+    MENORIGUAL      reduce using rule 20 (exp_f -> ID .)
+    MAYOR           reduce using rule 20 (exp_f -> ID .)
+    MAYORIGUAL      reduce using rule 20 (exp_f -> ID .)
+    IGUAL           reduce using rule 20 (exp_f -> ID .)
+    NOIGUAL         reduce using rule 20 (exp_f -> ID .)
+    MAS             reduce using rule 20 (exp_f -> ID .)
+    MENOS           reduce using rule 20 (exp_f -> ID .)
+    AND             reduce using rule 20 (exp_f -> ID .)
+    OR              reduce using rule 20 (exp_f -> ID .)
+    $end            reduce using rule 20 (exp_f -> ID .)
+    PARD            reduce using rule 20 (exp_f -> ID .)
+
+
+state 10
+
+    (2) exp_l -> exp_l AND . exp_r
+    (6) exp_r -> . exp_e MENOR exp_e
+    (7) exp_r -> . exp_e MENORIGUAL exp_e
+    (8) exp_r -> . exp_e MAYOR exp_e
+    (9) exp_r -> . exp_e MAYORIGUAL exp_e
+    (10) exp_r -> . exp_e IGUAL exp_e
+    (11) exp_r -> . exp_e NOIGUAL exp_e
+    (12) exp_r -> . exp_e
+    (13) exp_e -> . exp_e MAS exp_t
+    (14) exp_e -> . exp_e MENOS exp_t
+    (15) exp_e -> . exp_t
+    (16) exp_t -> . exp_t POR exp_f
+    (17) exp_t -> . exp_t DIV exp_f
+    (18) exp_t -> . exp_f
+    (19) exp_f -> . PARI exp_e PARD
+    (20) exp_f -> . ID
+
+    PARI            shift and go to state 8
+    ID              shift and go to state 9
+
+    exp_r                          shift and go to state 24
+    exp_e                          shift and go to state 5
+    exp_t                          shift and go to state 6
+    exp_f                          shift and go to state 7
+
+state 11
+
+    (3) exp_l -> exp_l OR . exp_r
+    (6) exp_r -> . exp_e MENOR exp_e
+    (7) exp_r -> . exp_e MENORIGUAL exp_e
+    (8) exp_r -> . exp_e MAYOR exp_e
+    (9) exp_r -> . exp_e MAYORIGUAL exp_e
+    (10) exp_r -> . exp_e IGUAL exp_e
+    (11) exp_r -> . exp_e NOIGUAL exp_e
+    (12) exp_r -> . exp_e
+    (13) exp_e -> . exp_e MAS exp_t
+    (14) exp_e -> . exp_e MENOS exp_t
+    (15) exp_e -> . exp_t
+    (16) exp_t -> . exp_t POR exp_f
+    (17) exp_t -> . exp_t DIV exp_f
+    (18) exp_t -> . exp_f
+    (19) exp_f -> . PARI exp_e PARD
+    (20) exp_f -> . ID
+
+    PARI            shift and go to state 8
+    ID              shift and go to state 9
+
+    exp_r                          shift and go to state 25
+    exp_e                          shift and go to state 5
+    exp_t                          shift and go to state 6
+    exp_f                          shift and go to state 7
+
+state 12
+
+    (4) exp_l -> NOT exp_r .
+
+    AND             reduce using rule 4 (exp_l -> NOT exp_r .)
+    OR              reduce using rule 4 (exp_l -> NOT exp_r .)
+    $end            reduce using rule 4 (exp_l -> NOT exp_r .)
+
+
+state 13
+
+    (6) exp_r -> exp_e MENOR . exp_e
+    (13) exp_e -> . exp_e MAS exp_t
+    (14) exp_e -> . exp_e MENOS exp_t
+    (15) exp_e -> . exp_t
+    (16) exp_t -> . exp_t POR exp_f
+    (17) exp_t -> . exp_t DIV exp_f
+    (18) exp_t -> . exp_f
+    (19) exp_f -> . PARI exp_e PARD
+    (20) exp_f -> . ID
+
+    PARI            shift and go to state 8
+    ID              shift and go to state 9
+
+    exp_e                          shift and go to state 26
+    exp_t                          shift and go to state 6
+    exp_f                          shift and go to state 7
+
+state 14
+
+    (7) exp_r -> exp_e MENORIGUAL . exp_e
+    (13) exp_e -> . exp_e MAS exp_t
+    (14) exp_e -> . exp_e MENOS exp_t
+    (15) exp_e -> . exp_t
+    (16) exp_t -> . exp_t POR exp_f
+    (17) exp_t -> . exp_t DIV exp_f
+    (18) exp_t -> . exp_f
+    (19) exp_f -> . PARI exp_e PARD
+    (20) exp_f -> . ID
+
+    PARI            shift and go to state 8
+    ID              shift and go to state 9
+
+    exp_e                          shift and go to state 27
+    exp_t                          shift and go to state 6
+    exp_f                          shift and go to state 7
+
+state 15
+
+    (8) exp_r -> exp_e MAYOR . exp_e
+    (13) exp_e -> . exp_e MAS exp_t
+    (14) exp_e -> . exp_e MENOS exp_t
+    (15) exp_e -> . exp_t
+    (16) exp_t -> . exp_t POR exp_f
+    (17) exp_t -> . exp_t DIV exp_f
+    (18) exp_t -> . exp_f
+    (19) exp_f -> . PARI exp_e PARD
+    (20) exp_f -> . ID
+
+    PARI            shift and go to state 8
+    ID              shift and go to state 9
+
+    exp_e                          shift and go to state 28
+    exp_t                          shift and go to state 6
+    exp_f                          shift and go to state 7
+
+state 16
+
+    (9) exp_r -> exp_e MAYORIGUAL . exp_e
+    (13) exp_e -> . exp_e MAS exp_t
+    (14) exp_e -> . exp_e MENOS exp_t
+    (15) exp_e -> . exp_t
+    (16) exp_t -> . exp_t POR exp_f
+    (17) exp_t -> . exp_t DIV exp_f
+    (18) exp_t -> . exp_f
+    (19) exp_f -> . PARI exp_e PARD
+    (20) exp_f -> . ID
+
+    PARI            shift and go to state 8
+    ID              shift and go to state 9
+
+    exp_e                          shift and go to state 29
+    exp_t                          shift and go to state 6
+    exp_f                          shift and go to state 7
+
+state 17
+
+    (10) exp_r -> exp_e IGUAL . exp_e
+    (13) exp_e -> . exp_e MAS exp_t
+    (14) exp_e -> . exp_e MENOS exp_t
+    (15) exp_e -> . exp_t
+    (16) exp_t -> . exp_t POR exp_f
+    (17) exp_t -> . exp_t DIV exp_f
+    (18) exp_t -> . exp_f
+    (19) exp_f -> . PARI exp_e PARD
+    (20) exp_f -> . ID
+
+    PARI            shift and go to state 8
+    ID              shift and go to state 9
+
+    exp_e                          shift and go to state 30
+    exp_t                          shift and go to state 6
+    exp_f                          shift and go to state 7
+
+state 18
+
+    (11) exp_r -> exp_e NOIGUAL . exp_e
+    (13) exp_e -> . exp_e MAS exp_t
+    (14) exp_e -> . exp_e MENOS exp_t
+    (15) exp_e -> . exp_t
+    (16) exp_t -> . exp_t POR exp_f
+    (17) exp_t -> . exp_t DIV exp_f
+    (18) exp_t -> . exp_f
+    (19) exp_f -> . PARI exp_e PARD
+    (20) exp_f -> . ID
+
+    PARI            shift and go to state 8
+    ID              shift and go to state 9
+
+    exp_e                          shift and go to state 31
+    exp_t                          shift and go to state 6
+    exp_f                          shift and go to state 7
+
+state 19
+
+    (13) exp_e -> exp_e MAS . exp_t
+    (16) exp_t -> . exp_t POR exp_f
+    (17) exp_t -> . exp_t DIV exp_f
+    (18) exp_t -> . exp_f
+    (19) exp_f -> . PARI exp_e PARD
+    (20) exp_f -> . ID
+
+    PARI            shift and go to state 8
+    ID              shift and go to state 9
+
+    exp_t                          shift and go to state 32
+    exp_f                          shift and go to state 7
+
+state 20
+
+    (14) exp_e -> exp_e MENOS . exp_t
+    (16) exp_t -> . exp_t POR exp_f
+    (17) exp_t -> . exp_t DIV exp_f
+    (18) exp_t -> . exp_f
+    (19) exp_f -> . PARI exp_e PARD
+    (20) exp_f -> . ID
+
+    PARI            shift and go to state 8
+    ID              shift and go to state 9
+
+    exp_t                          shift and go to state 33
+    exp_f                          shift and go to state 7
+
+state 21
+
+    (16) exp_t -> exp_t POR . exp_f
+    (19) exp_f -> . PARI exp_e PARD
+    (20) exp_f -> . ID
+
+    PARI            shift and go to state 8
+    ID              shift and go to state 9
+
+    exp_f                          shift and go to state 34
+
+state 22
+
+    (17) exp_t -> exp_t DIV . exp_f
+    (19) exp_f -> . PARI exp_e PARD
+    (20) exp_f -> . ID
+
+    PARI            shift and go to state 8
+    ID              shift and go to state 9
+
+    exp_f                          shift and go to state 35
+
+state 23
+
+    (19) exp_f -> PARI exp_e . PARD
+    (13) exp_e -> exp_e . MAS exp_t
+    (14) exp_e -> exp_e . MENOS exp_t
+
+    PARD            shift and go to state 36
+    MAS             shift and go to state 19
+    MENOS           shift and go to state 20
+
+
+state 24
+
+    (2) exp_l -> exp_l AND exp_r .
+
+    AND             reduce using rule 2 (exp_l -> exp_l AND exp_r .)
+    OR              reduce using rule 2 (exp_l -> exp_l AND exp_r .)
+    $end            reduce using rule 2 (exp_l -> exp_l AND exp_r .)
+
+
+state 25
+
+    (3) exp_l -> exp_l OR exp_r .
+
+    AND             reduce using rule 3 (exp_l -> exp_l OR exp_r .)
+    OR              reduce using rule 3 (exp_l -> exp_l OR exp_r .)
+    $end            reduce using rule 3 (exp_l -> exp_l OR exp_r .)
+
+
+state 26
+
+    (6) exp_r -> exp_e MENOR exp_e .
+    (13) exp_e -> exp_e . MAS exp_t
+    (14) exp_e -> exp_e . MENOS exp_t
+
+    AND             reduce using rule 6 (exp_r -> exp_e MENOR exp_e .)
+    OR              reduce using rule 6 (exp_r -> exp_e MENOR exp_e .)
+    $end            reduce using rule 6 (exp_r -> exp_e MENOR exp_e .)
+    MAS             shift and go to state 19
+    MENOS           shift and go to state 20
+
+
+state 27
+
+    (7) exp_r -> exp_e MENORIGUAL exp_e .
+    (13) exp_e -> exp_e . MAS exp_t
+    (14) exp_e -> exp_e . MENOS exp_t
+
+    AND             reduce using rule 7 (exp_r -> exp_e MENORIGUAL exp_e .)
+    OR              reduce using rule 7 (exp_r -> exp_e MENORIGUAL exp_e .)
+    $end            reduce using rule 7 (exp_r -> exp_e MENORIGUAL exp_e .)
+    MAS             shift and go to state 19
+    MENOS           shift and go to state 20
+
+
+state 28
+
+    (8) exp_r -> exp_e MAYOR exp_e .
+    (13) exp_e -> exp_e . MAS exp_t
+    (14) exp_e -> exp_e . MENOS exp_t
+
+    AND             reduce using rule 8 (exp_r -> exp_e MAYOR exp_e .)
+    OR              reduce using rule 8 (exp_r -> exp_e MAYOR exp_e .)
+    $end            reduce using rule 8 (exp_r -> exp_e MAYOR exp_e .)
+    MAS             shift and go to state 19
+    MENOS           shift and go to state 20
+
+
+state 29
+
+    (9) exp_r -> exp_e MAYORIGUAL exp_e .
+    (13) exp_e -> exp_e . MAS exp_t
+    (14) exp_e -> exp_e . MENOS exp_t
+
+    AND             reduce using rule 9 (exp_r -> exp_e MAYORIGUAL exp_e .)
+    OR              reduce using rule 9 (exp_r -> exp_e MAYORIGUAL exp_e .)
+    $end            reduce using rule 9 (exp_r -> exp_e MAYORIGUAL exp_e .)
+    MAS             shift and go to state 19
+    MENOS           shift and go to state 20
+
+
+state 30
+
+    (10) exp_r -> exp_e IGUAL exp_e .
+    (13) exp_e -> exp_e . MAS exp_t
+    (14) exp_e -> exp_e . MENOS exp_t
+
+    AND             reduce using rule 10 (exp_r -> exp_e IGUAL exp_e .)
+    OR              reduce using rule 10 (exp_r -> exp_e IGUAL exp_e .)
+    $end            reduce using rule 10 (exp_r -> exp_e IGUAL exp_e .)
+    MAS             shift and go to state 19
+    MENOS           shift and go to state 20
+
+
+state 31
+
+    (11) exp_r -> exp_e NOIGUAL exp_e .
+    (13) exp_e -> exp_e . MAS exp_t
+    (14) exp_e -> exp_e . MENOS exp_t
+
+    AND             reduce using rule 11 (exp_r -> exp_e NOIGUAL exp_e .)
+    OR              reduce using rule 11 (exp_r -> exp_e NOIGUAL exp_e .)
+    $end            reduce using rule 11 (exp_r -> exp_e NOIGUAL exp_e .)
+    MAS             shift and go to state 19
+    MENOS           shift and go to state 20
+
+
+state 32
+
+    (13) exp_e -> exp_e MAS exp_t .
+    (16) exp_t -> exp_t . POR exp_f
+    (17) exp_t -> exp_t . DIV exp_f
+
+    MENOR           reduce using rule 13 (exp_e -> exp_e MAS exp_t .)
+    MENORIGUAL      reduce using rule 13 (exp_e -> exp_e MAS exp_t .)
+    MAYOR           reduce using rule 13 (exp_e -> exp_e MAS exp_t .)
+    MAYORIGUAL      reduce using rule 13 (exp_e -> exp_e MAS exp_t .)
+    IGUAL           reduce using rule 13 (exp_e -> exp_e MAS exp_t .)
+    NOIGUAL         reduce using rule 13 (exp_e -> exp_e MAS exp_t .)
+    MAS             reduce using rule 13 (exp_e -> exp_e MAS exp_t .)
+    MENOS           reduce using rule 13 (exp_e -> exp_e MAS exp_t .)
+    AND             reduce using rule 13 (exp_e -> exp_e MAS exp_t .)
+    OR              reduce using rule 13 (exp_e -> exp_e MAS exp_t .)
+    $end            reduce using rule 13 (exp_e -> exp_e MAS exp_t .)
+    PARD            reduce using rule 13 (exp_e -> exp_e MAS exp_t .)
+    POR             shift and go to state 21
+    DIV             shift and go to state 22
+
+
+state 33
+
+    (14) exp_e -> exp_e MENOS exp_t .
+    (16) exp_t -> exp_t . POR exp_f
+    (17) exp_t -> exp_t . DIV exp_f
+
+    MENOR           reduce using rule 14 (exp_e -> exp_e MENOS exp_t .)
+    MENORIGUAL      reduce using rule 14 (exp_e -> exp_e MENOS exp_t .)
+    MAYOR           reduce using rule 14 (exp_e -> exp_e MENOS exp_t .)
+    MAYORIGUAL      reduce using rule 14 (exp_e -> exp_e MENOS exp_t .)
+    IGUAL           reduce using rule 14 (exp_e -> exp_e MENOS exp_t .)
+    NOIGUAL         reduce using rule 14 (exp_e -> exp_e MENOS exp_t .)
+    MAS             reduce using rule 14 (exp_e -> exp_e MENOS exp_t .)
+    MENOS           reduce using rule 14 (exp_e -> exp_e MENOS exp_t .)
+    AND             reduce using rule 14 (exp_e -> exp_e MENOS exp_t .)
+    OR              reduce using rule 14 (exp_e -> exp_e MENOS exp_t .)
+    $end            reduce using rule 14 (exp_e -> exp_e MENOS exp_t .)
+    PARD            reduce using rule 14 (exp_e -> exp_e MENOS exp_t .)
+    POR             shift and go to state 21
+    DIV             shift and go to state 22
+
+
+state 34
+
+    (16) exp_t -> exp_t POR exp_f .
+
+    POR             reduce using rule 16 (exp_t -> exp_t POR exp_f .)
+    DIV             reduce using rule 16 (exp_t -> exp_t POR exp_f .)
+    MENOR           reduce using rule 16 (exp_t -> exp_t POR exp_f .)
+    MENORIGUAL      reduce using rule 16 (exp_t -> exp_t POR exp_f .)
+    MAYOR           reduce using rule 16 (exp_t -> exp_t POR exp_f .)
+    MAYORIGUAL      reduce using rule 16 (exp_t -> exp_t POR exp_f .)
+    IGUAL           reduce using rule 16 (exp_t -> exp_t POR exp_f .)
+    NOIGUAL         reduce using rule 16 (exp_t -> exp_t POR exp_f .)
+    MAS             reduce using rule 16 (exp_t -> exp_t POR exp_f .)
+    MENOS           reduce using rule 16 (exp_t -> exp_t POR exp_f .)
+    AND             reduce using rule 16 (exp_t -> exp_t POR exp_f .)
+    OR              reduce using rule 16 (exp_t -> exp_t POR exp_f .)
+    $end            reduce using rule 16 (exp_t -> exp_t POR exp_f .)
+    PARD            reduce using rule 16 (exp_t -> exp_t POR exp_f .)
+
+
+state 35
+
+    (17) exp_t -> exp_t DIV exp_f .
+
+    POR             reduce using rule 17 (exp_t -> exp_t DIV exp_f .)
+    DIV             reduce using rule 17 (exp_t -> exp_t DIV exp_f .)
+    MENOR           reduce using rule 17 (exp_t -> exp_t DIV exp_f .)
+    MENORIGUAL      reduce using rule 17 (exp_t -> exp_t DIV exp_f .)
+    MAYOR           reduce using rule 17 (exp_t -> exp_t DIV exp_f .)
+    MAYORIGUAL      reduce using rule 17 (exp_t -> exp_t DIV exp_f .)
+    IGUAL           reduce using rule 17 (exp_t -> exp_t DIV exp_f .)
+    NOIGUAL         reduce using rule 17 (exp_t -> exp_t DIV exp_f .)
+    MAS             reduce using rule 17 (exp_t -> exp_t DIV exp_f .)
+    MENOS           reduce using rule 17 (exp_t -> exp_t DIV exp_f .)
+    AND             reduce using rule 17 (exp_t -> exp_t DIV exp_f .)
+    OR              reduce using rule 17 (exp_t -> exp_t DIV exp_f .)
+    $end            reduce using rule 17 (exp_t -> exp_t DIV exp_f .)
+    PARD            reduce using rule 17 (exp_t -> exp_t DIV exp_f .)
+
+
+state 36
+
+    (19) exp_f -> PARI exp_e PARD .
+
+    POR             reduce using rule 19 (exp_f -> PARI exp_e PARD .)
+    DIV             reduce using rule 19 (exp_f -> PARI exp_e PARD .)
+    MENOR           reduce using rule 19 (exp_f -> PARI exp_e PARD .)
+    MENORIGUAL      reduce using rule 19 (exp_f -> PARI exp_e PARD .)
+    MAYOR           reduce using rule 19 (exp_f -> PARI exp_e PARD .)
+    MAYORIGUAL      reduce using rule 19 (exp_f -> PARI exp_e PARD .)
+    IGUAL           reduce using rule 19 (exp_f -> PARI exp_e PARD .)
+    NOIGUAL         reduce using rule 19 (exp_f -> PARI exp_e PARD .)
+    MAS             reduce using rule 19 (exp_f -> PARI exp_e PARD .)
+    MENOS           reduce using rule 19 (exp_f -> PARI exp_e PARD .)
+    AND             reduce using rule 19 (exp_f -> PARI exp_e PARD .)
+    OR              reduce using rule 19 (exp_f -> PARI exp_e PARD .)
+    $end            reduce using rule 19 (exp_f -> PARI exp_e PARD .)
+    PARD            reduce using rule 19 (exp_f -> PARI exp_e PARD .)
+
