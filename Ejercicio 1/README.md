@@ -1,5 +1,9 @@
 # Cortos de Organización y Lenguajes de Compiladores 2
 
+- [Cortos de Organización y Lenguajes de Compiladores 2](#cortos-de-organización-y-lenguajes-de-compiladores-2)
+  - [Corto 1](#corto-1)
+  - [Corto 2](#corto-2)
+
 ## Corto 1
 
 Escriba un esquema de traducción dirigido por la sintaxis posfijo, para un analizador ascendente que reciba como entrada una expresión aritmética (*, +, -, / y paréntesis) y genere para esta el código de tres direcciones equivalente.
@@ -104,3 +108,64 @@ t6 = t5 - d
 t7 = t6 + a
 t8 = t3 * t7
 ```
+
+## Corto 2
+
+Se agregaron expresiones relacionales a la gramática devolviendo su correspondiente en código en 3 direcciones.
+
+Entrada:
+```
+a > b && c > d
+```
+
+Salida:
+```
+if a > b goto L1
+goto L2
+L1:
+if c > d goto L3
+goto L4
+Etiquetas verdaderas:
+['L3']
+Etiquetas falsas:
+['L2', 'L4']
+```
+
+---
+
+Entrada:
+```
+a > b || c > d
+```
+
+Salida:
+```
+if a > b goto L1
+goto L2
+L2:
+if c > d goto L3
+goto L4
+Etiquetas verdaderas:
+['L1', 'L3']
+Etiquetas falsas:
+['L4']
+```
+
+---
+
+Entrada:
+```
+!e > f
+```
+
+Salida:
+```
+if e > f goto L1
+goto L2
+Etiquetas verdaderas:
+['L2']
+Etiquetas falsas:
+['L1']
+```
+
+---

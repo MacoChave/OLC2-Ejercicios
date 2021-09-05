@@ -91,7 +91,13 @@ def p_logic(t) :
         l3 = newLabel()
         l4 = newLabel()
         c3d = f'{t[1].c3d}{t[3].c3d}\nif {t[1].temp} goto {l1}\ngoto {l2}\n{l1}:\nif {t[3].temp} goto {l3}\ngoto {l4}'
-        t[0] = Atributo('', c3d, [l3], [l2, l4])
+        true_labels = t[1].true_label
+        true_labels.extend(t[3].true_label)
+        false_labels = t[1].false_label
+        false_labels.extend(t[3].false_label)
+        true_labels.append(l3)
+        false_labels.extend([l2, l4])
+        t[0] = Atributo('', c3d, true_labels, false_labels)
     if t[2] == '||' : 
         # LV: L1, L3
         # LF: L4
@@ -100,13 +106,19 @@ def p_logic(t) :
         l3 = newLabel()
         l4 = newLabel()
         c3d = f'{t[1].c3d}{t[3].c3d}\nif {t[1].temp} goto {l1}\ngoto {l2}\n{l2}:\nif {t[3].temp} goto {l3}\ngoto {l4}'
-        t[0] = Atributo('', c3d, [l1, l3], [l4])
+        true_labels = t[1].true_label
+        true_labels.extend(t[3].true_label)
+        false_labels = t[1].false_label
+        false_labels.extend(t[3].false_label)
+        true_labels.extend([l1, l3])
+        false_labels.append(l4)
+        t[0] = Atributo('', c3d, true_labels, false_labels)
 
 def p_logic_not(t) :
     'exp_l : NOT exp_r'
     l1 = newLabel()
     l2 = newLabel()
-    c3d = f'{t[1].c3d}{t[3].c3d}\nif {t[1].temp} goto {l1}\ngoto {l2}'
+    c3d = f'{t[2].c3d}\nif {t[2].temp} goto {l1}\ngoto {l2}'
     t[0] = Atributo('', c3d, [l2], [l1])
 
 def p_logic_rel(t) :
