@@ -1,10 +1,10 @@
 class Atributo:
     temp = ''
     c3d = ''
-    true_label = []
-    false_label = []
+    true_label = ''
+    false_label = ''
     
-    def __init__(self, temp, c3d, true_label = [], false_label = []) -> None:
+    def __init__(self, temp, c3d, true_label = '', false_label = '') -> None:
         self.temp = temp
         self.c3d = c3d
         self.true_label = true_label

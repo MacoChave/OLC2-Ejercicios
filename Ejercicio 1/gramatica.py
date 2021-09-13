@@ -15,6 +15,7 @@ tokens = [
     'NOT',
     'AND',
     'OR',
+    'NUM'
 ]
 
 # TOKENS
@@ -38,6 +39,15 @@ def t_ID(t) :
     r'[a-zA-Z_][a-zA-Z_0-9]*'
     return t
 
+def t_NUM(t) :
+    r'\d+'
+    try :
+        t.value = int(t.value)
+    except ValueError :
+        print('Entero {t.value} es muy grande')
+        t.value = 0
+    return t
+
 # CARACTERES IGNORADOS
 t_ignore = ' \t'
 
@@ -57,7 +67,7 @@ precedence = (
     ('left', 'IGUAL', 'NOIGUAL', 'MENOR', 'MAYOR', 'MENORIGUAL', 'MAYORIGUAL'),
     ('left', 'OR'),
     ('left', 'AND'),
-    ('RIGHT', 'NOT'),
+    ('right', 'NOT'),
 )
 
 # GRAMMAR
@@ -77,52 +87,33 @@ def newLabel() :
     return f'L{label}'
 
 def p_start(t) :
-    'start : exp_l'
+    'start : logic_o'
     t[0] = t[1]
 
-def p_logic(t) :
-    '''exp_l    : exp_l AND exp_r
-                | exp_l OR exp_r'''
-    if t[2] == '&&' : 
-        # LV: L3
-        # LF: L2, L4
-        l1 = newLabel()
-        l2 = newLabel()
-        l3 = newLabel()
-        l4 = newLabel()
-        c3d = f'{t[1].c3d}{t[3].c3d}\nif {t[1].temp} goto {l1}\ngoto {l2}\n{l1}:\nif {t[3].temp} goto {l3}\ngoto {l4}'
-        true_labels = t[1].true_label
-        true_labels.extend(t[3].true_label)
-        false_labels = t[1].false_label
-        false_labels.extend(t[3].false_label)
-        true_labels.append(l3)
-        false_labels.extend([l2, l4])
-        t[0] = Atributo('', c3d, true_labels, false_labels)
-    if t[2] == '||' : 
-        # LV: L1, L3
-        # LF: L4
-        l1 = newLabel()
-        l2 = newLabel()
-        l3 = newLabel()
-        l4 = newLabel()
-        c3d = f'{t[1].c3d}{t[3].c3d}\nif {t[1].temp} goto {l1}\ngoto {l2}\n{l2}:\nif {t[3].temp} goto {l3}\ngoto {l4}'
-        true_labels = t[1].true_label
-        true_labels.extend(t[3].true_label)
-        false_labels = t[1].false_label
-        false_labels.extend(t[3].false_label)
-        true_labels.extend([l1, l3])
-        false_labels.append(l4)
-        t[0] = Atributo('', c3d, true_labels, false_labels)
+def p_logic_o(t) :
+    'logic_o : logic_o OR logic_a'
+    c3d = f'{t[1].c3d} {t[1].false_label}:\n{t[3].c3d}'
+    t[0] = Atributo('', c3d, f'{t[1].true_label}, {t[3].true_label}', t[3].false_label)
+
+def p_to_logic_a(t) :
+    'logic_o : logic_a'
+    t[0] = t[1]
+
+def p_logic_a(t) :
+    'logic_a : logic_a AND logic_n'
+    c3d = f'{t[1].c3d} {t[1].true_label}:\n{t[3].c3d}'
+    t[0] = Atributo('', c3d, t[3].true_label, f'{t[1].false_label}, {t[3].false_label}')
+
+def p_to_logic_not(t) :
+    'logic_a : logic_n'
+    t[0] = t[1]
 
 def p_logic_not(t) :
-    'exp_l : NOT exp_r'
-    l1 = newLabel()
-    l2 = newLabel()
-    c3d = f'{t[2].c3d}\nif {t[2].temp} goto {l1}\ngoto {l2}'
-    t[0] = Atributo('', c3d, [l2], [l1])
+    'logic_n : NOT logic_o'
+    t[0] = Atributo('', t[2].c3d, t[2].false_label, t[2].true_label)
 
 def p_logic_rel(t) :
-    'exp_l : exp_r'
+    'logic_n : exp_r'
     t[0] = t[1]
 
 def p_rel(t) :
@@ -133,33 +124,45 @@ def p_rel(t) :
                 | exp_e IGUAL exp_e
                 | exp_e NOIGUAL exp_e'''
     if t[2] == '<' :
-        temp = f'{t[1].temp} < {t[3].temp}'
-        c3d = f'{t[1].c3d}{t[3].c3d}\n'
-        t[0] = Atributo(temp, c3d)
+        lv = newLabel()
+        lf = newLabel()
+        temp = ''
+        c3d = f'{t[1].c3d}{t[3].c3d}\nif {t[1].temp} < {t[3].temp} goto {lv}\n goto {lf}\n'
+        t[0] = Atributo(temp, c3d, lv, lf)
     elif t[2] == '<=' :
-        temp = f'{t[1].temp} <= {t[3].temp}'
-        c3d = f'{t[1].c3d}{t[3].c3d}\n'
-        t[0] = Atributo(temp, c3d)
+        lv = newLabel()
+        lf = newLabel()
+        temp = ''
+        c3d = f'{t[1].c3d}{t[3].c3d}\nif {t[1].temp} <= {t[3].temp} goto {lv}\n goto {lf}\n'
+        t[0] = Atributo(temp, c3d, lv, lf)
     elif t[2] == '>' :
-        temp = f'{t[1].temp} > {t[3].temp}'
-        c3d = f'{t[1].c3d}{t[3].c3d}\n'
-        t[0] = Atributo(temp, c3d)
+        lv = newLabel()
+        lf = newLabel()
+        temp = ''
+        c3d = f'{t[1].c3d}{t[3].c3d}\nif {t[1].temp} > {t[3].temp} goto {lv}\n goto {lf}\n'
+        t[0] = Atributo(temp, c3d, lv, lf)
     elif t[2] == '>=' :
-        temp = f'{t[1].temp} >= {t[3].temp}'
-        c3d = f'{t[1].c3d}{t[3].c3d}\n'
-        t[0] = Atributo(temp, c3d)
+        lv = newLabel()
+        lf = newLabel()
+        temp = ''
+        c3d = f'{t[1].c3d}{t[3].c3d}\nif {t[1].temp} >= {t[3].temp} goto {lv}\n goto {lf}\n'
+        t[0] = Atributo(temp, c3d, lv, lf)
     elif t[2] == '==' :
-        temp = f'{t[1].temp} == {t[3].temp}'
-        c3d = f'{t[1].c3d}{t[3].c3d}\n'
-        t[0] = Atributo(temp, c3d)
+        lv = newLabel()
+        lf = newLabel()
+        temp = ''
+        c3d = f'{t[1].c3d}{t[3].c3d}\nif {t[1].temp} == {t[3].temp} goto {lv}\n goto {lf}\n'
+        t[0] = Atributo(temp, c3d, lv, lf)
     elif t[2] == '!=' :
-        temp = f'{t[1].temp} != {t[3].temp}'
-        c3d = f'{t[1].c3d}{t[3].c3d}\n'
-        t[0] = Atributo(temp, c3d)
+        lv = newLabel()
+        lf = newLabel()
+        temp = ''
+        c3d = f'{t[1].c3d}{t[3].c3d}\nif {t[1].temp} != {t[3].temp} goto {lv}\n goto {lf}\n'
+        t[0] = Atributo(temp, c3d, lv, lf)
 
-def p_rel_e(t) :
-    'exp_r : exp_e'
-    t[0] = Atributo(t[1].temp, t[1].c3d)
+# def p_rel_e(t) :
+#     'exp_r : exp_e'
+#     t[0] = Atributo(t[1].temp, t[1].c3d)
     
 def p_adicion(t) :
     '''exp_e    : exp_e MAS exp_t
@@ -175,7 +178,7 @@ def p_adicion(t) :
 
 def p_to_multiplo(t) :
     'exp_e : exp_t'
-    t[0] = Atributo(t[1].temp, t[1].c3d)
+    t[0] = t[1]
 
 def p_multiplicacion(t) :
     '''exp_t    : exp_t POR exp_f
@@ -191,7 +194,7 @@ def p_multiplicacion(t) :
 
 def p_to_f(t) :
     'exp_t : exp_f'
-    t[0] = Atributo(t[1].temp, t[1].c3d)
+    t[0] = t[1]
 
 def p_parentesis(t) :
     'exp_f : PARI exp_e PARD'
@@ -199,6 +202,10 @@ def p_parentesis(t) :
 
 def p_soloid(t) :
     'exp_f : ID'
+    t[0] = Atributo(t[1], '')
+
+def p_num(t) :
+    'exp_f : NUM'
     t[0] = Atributo(t[1], '')
 
 def p_error(t):
